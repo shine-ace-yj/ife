@@ -18,6 +18,7 @@
   left,right模块position: absolute; 脱离文档流；top: 0; <br/>
   left模块 设置宽度， left: 0;<br/>
   right模块：设置宽度， right: 0;<br/>
+  当中间有内部有固定宽度的元素或设有最小宽度，缩小时 会发生重叠
 
 
 + float:
