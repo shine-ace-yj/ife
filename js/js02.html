@@ -45,7 +45,10 @@
       var con = ary.map((item, index, array) => item.join(':'))
       
       var ul = document.getElementById('aqi-list');
-      ul.innerHTML = `<li>${con[0]}</li><li>${con[1]}</li><li>${con[2]}</li>`;
+      for (let i = 0; i < con.length; i++) {
+        ul.innerHTML += `<li>${con[i]}</li>`
+      }
+      //ul.innerHTML = `<li>${con[0]}</li><li>${con[1]}</li><li>${con[2]}</li>`;
 
     })();
   </script>
