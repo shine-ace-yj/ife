@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  padding: 20px;
+}
+#container {
+  background-color: #eee;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid #27f;
+  position: relative;
+}
+#left,
+#right {
+  position: absolute;
+  top: 20px;
+}
+#left {
+  width: 200px;
+  padding: 20px;
+  border: 1px solid #27f;
+  left: 20px;
+}
+#right {
+  width: 121px;
+  padding: 20px;
+  border: 1px solid #27f;
+  right: 20px;
+}
+
+
+#center {
+  border: 1px solid #27f;
+  margin-left: 220px;
+  margin-right: 140px;
+  line-height: 2;
+  padding: 20px;
+}
+
+ul {
+  list-style: none;
+}
+img {
+  border: 1px solid #27f;
+}
+figure, figcaption {
+  float: left;
+}
+figcaption {
+  padding-left: 10px;
+}
+.null {
+  width: 500px;
+  height: 500px;
+  border: 1px solid #27f;
+}
+/*  
+左右position: absolute; top left right贴左右上; 中间的 margin-left margin-right 当中间有内部有固定宽度的元素或设有最小宽度，缩小时 会发生重叠
+*/
