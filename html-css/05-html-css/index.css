@@ -1,0 +1,234 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* S header*/
+
+header {
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    background-color: #353d40;
+}
+
+#logo {
+    height: 100%;
+    float: left;
+    padding-bottom: 20px;
+}
+
+#nav {
+    list-style: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 20px;
+    float: right;
+}
+
+#nav li {
+    float: left;
+    padding: 0 10px;
+}
+
+#nav li::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #000;
+    border-radius: 3px;
+    position: relative;
+    top: -4px;
+    left: -4px;
+}
+
+#nav li:last-child {
+    color: #899;
+}
+
+
+/* E header */
+
+
+/* S main */
+
+.container {
+    background-color: #eee;
+    padding: 24px;
+}
+
+main {
+    margin-right: calc(30% + 24px);
+    min-width: 200px;
+}
+
+article,
+section,
+aside {
+    background-color: #fff;
+    padding: 20px;
+    min-width: 100px;
+    margin-bottom: 30px;
+    box-shadow: 1px 1px 2px #344;
+}
+
+article h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+article h4 {
+    color: #778;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+article p {
+    text-indent: 2em;
+    line-height: 1.5;
+}
+
+article img {
+    display: block;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    width: 80%;
+    height: auto;
+    max-width: 80%;
+    display: block;
+}
+
+article ul {
+    list-style: none;
+}
+
+article ol {
+    margin-left: 40px;
+}
+
+article ol li {
+    padding: 5px 0;
+}
+
+.article-info {
+    font-size: 12px;
+    text-indent: 0;
+    color: #899;
+    margin: 16px 0;
+}
+
+section {
+    overflow: hidden;
+}
+
+figure {
+    border: 1px solid #ddd;
+    text-align: center;
+    width: 140px;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 20px;
+    float: left;
+}
+
+figcaption {
+    padding: 10px 0;
+}
+
+article table {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+article th {
+    background-color: #333;
+    color: #fff;
+    font-weight: 400;
+    padding: 8px;
+}
+
+article td {
+    padding: 8px;
+}
+
+article table tr:last-child {
+    background-color: #ddd;
+}
+
+aside {
+    width: 30%;
+    position: absolute;
+    top: 85px;
+    right: 24px;
+}
+
+aside h3 {
+    border-left: 4px solid #ddd;
+    padding: 6px 40px;
+}
+
+aside form {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+aside form label {
+    display: inline-block;
+    width: 40%;
+    padding-right: 10px;
+    text-align: right;
+}
+
+aside p.info {
+    padding-left: 40%;
+    padding-top: 16px;
+    color: #ddd;
+}
+
+aside input,
+select,
+textarea {
+    margin-top: 16px;
+}
+
+aside textarea {
+    width: 50%;
+    height: 100px;
+}
+
+label[for="discri"] {
+    position: relative;
+    top: -88px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 20px;
+    background-color: #27f;
+    color: #fff;
+    font-size: 16px;
+}
+
+
+/* E main */
+
+footer {
+    width: 100%;
+    height: 100px;
+    background-color: #27f;
+    color: #fff;
+}
+
+footer p {
+    height: 100%;
+    line-height: 100px;
+    text-align: center;
+}
