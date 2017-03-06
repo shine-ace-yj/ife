@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    main {
+      border: 1px solid #27f;
+      height: 80px;
+      width: 800px;
+      padding: 10px;
+    }
+    
+    button {
+      padding: 0 10px;
+    }
+    
+    .item {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-color: red;
+      margin: 20px 6px 10px 0;
+      text-align: center;
+      line-height: 40px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div id="control">
+      <input type="text" id="inpu" onkeyup="return ValidateNumber(this,value)" required>
+      <button type="button" id="leftin">左侧入</button>
+      <button type="button" id="rightin">右侧入</button>
+      <button type="button" id="leftout">左侧出</button>
+      <button type="button" id="rightout">右侧出</button>
+    </div>
+    <div id="show"></div>
+  </main>
+  <script>
+    var leftin = document.getElementById('leftin');
+    var rightin = document.getElementById('rightin');
+    var leftout = document.getElementById('leftout');
+    var rightout = document.getElementById('rightout');
+    var show = document.getElementById('show');
+    var item = document.getElementsByClassName('item');
+
+    createNode = () => {
+      var in_value = document.getElementById('inpu').value;
+      var span = document.createElement('span');
+      span.className = 'item';
+      span.innerHTML = in_value;
+      span.addEventListener('click', removeItem);
+      return span;
+    };
+
+    leftIn = () => {
+      var in_value = document.getElementById('inpu').value;
+      if (!in_value) {
+        return false;
+      }
+      let span = createNode();
+      show.insertBefore(span, show.firstElementChild);
+      document.getElementById('inpu').value = '';
+    };
+
+    rightIn = () => {
+      var in_value = document.getElementById('inpu').value;
+      if (!in_value) {
+        return false;
+      }
+      let span = createNode();
+      show.appendChild(span);
+      document.getElementById('inpu').value = '';
+    };
+
+    removeLeft = () => {
+      var nodeValue = show.removeChild(show.firstElementChild);
+      let num = nodeValue.innerHTML;
+      alert(num);
+    };
+
+    removeRight = () => {
+      var nodeValue = show.removeChild(show.lastElementChild);
+      let num = nodeValue.innerHTML;
+      alert(num);
+    };
+
+    removeItem = (event) => {
+      show.removeChild(event.target);
+    };
+
+    function ValidateNumber(e, pnumber) {
+      if (!/^\d+[.]?\d*$/.test(pnumber)) {
+        e.value = /^\d+[.]?\d*/.exec(e.value);
+      }
+      return false;
+    }
+    bindEvent = (type, node, handler) => {
+      node.addEventListener(type, handler);
+    };
+    bindEvent('click', leftin, leftIn);
+    bindEvent('click', rightin, rightIn);
+    bindEvent('click', leftout, removeLeft);
+    bindEvent('click', rightout, removeRight);
+  </script>
+</body>
+
+</html>
