@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    main {
+      border: 1px solid #27f;
+      height: 270px;
+      width: 100%;
+      padding: 10px;
+    }
+    
+    button {
+      padding: 0 10px;
+    }
+    
+    #show {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      border: 1px solid #27f;
+      margin-top: 20px;
+      padding-bottom: 2px;
+      display: flex;
+      align-items: flex-end;
+    }
+    
+    span {
+      display: inline-block;
+      width: 20px;
+      background-color: red;
+      margin: 0 2px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div id="control">
+      <input type="text" id="inpu" required>
+      <button type="button" id="leftin">左侧入</button>
+      <button type="button" id="rightin">右侧入</button>
+      <button type="button" id="leftout">左侧出</button>
+      <button type="button" id="rightout">右侧出</button>
+      <button type="button" id="sortup">排序</button>
+    </div>
+    <div id="show"></div>
+  </main>
+  <script>
+    var leftin = document.getElementById('leftin');
+    var rightin = document.getElementById('rightin');
+    var leftout = document.getElementById('leftout');
+    var rightout = document.getElementById('rightout');
+    var show = document.getElementById('show');
+    var item = document.getElementsByClassName('item');
+    var in_v = document.getElementById('inpu');
+    var btn_sort = document.getElementById('sortup');
+    var arr = [];
+    //限制输入为数字
+    inputControlNum = () => {
+      if (!/\d/.test(in_v.value)) {
+        alert('must number')
+        in_v.value = '';
+      }
+    };
+    //限制输入的数字在10-100之间 
+    inputControl = () => {
+      if (in_v.value < 10 || in_v.value > 100) {
+        alert('num < 10 or num > 100');
+        return false;
+      } else if (!in_v.value) {
+        return false;
+      }
+      return true;
+    };
+    //渲染函数
+    render = () => {
+      show.innerHTML = '';
+      arr.forEach((item, index, array) => {
+        var span = document.createElement('span');
+        span.style.height = `${item * 2}px`;
+        var h = span.style.cssText;
+        span.addEventListener('click', removeItem);
+        show.appendChild(span);
+      })
+    };
+
+    //左侧入
+    leftIn = () => {
+      if (!inputControl()) {
+        return false;
+      };
+      arr.unshift(in_v.value);
+      render(); //渲染
+      in_v.value = ''; //清空
+    };
+
+    //右侧入
+    rightIn = () => {
+      if (!inputControl()) {
+        return false;
+      };
+      arr.push(in_v.value);
+      render();
+      in_v.value = '';
+    };
+
+    //左侧出
+    removeLeft = () => {
+      arr.shift();
+      render();
+    };
+
+    //右侧出
+    removeRight = () => {
+      arr.pop();
+      render();
+    };
+
+    //事件点击删除元素自身
+    removeItem = (event) => {
+      show.removeChild(event.target);
+    }; 
+    /*测试用
+     *-function () {
+     * for (var i = 0; i < 11; i++) {
+        arr.push(Math.random() * 100 + 1);
+      }
+      render();
+      return arr;
+    }();*/
+
+    bubbleSort = () => {
+      for (var i = 0; i < arr.length - 1; i++) {
+        for (var j = 0; j < arr.length - 1 - i; j++) {
+              if (arr[j] > arr[j + 1]) {
+                var temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                render();
+              };
+          };
+        };
+      
+      console.log(arr);
+      return arr;
+    };
+
+    //绑定事件函数
+    bindEvent = (type, node, handler) => {
+      node.addEventListener(type, handler);
+    };
+    bindEvent('click', leftin, leftIn);
+    bindEvent('click', rightin, rightIn);
+    bindEvent('click', leftout, removeLeft);
+    bindEvent('click', rightout, removeRight);
+    bindEvent('keyup', in_v, inputControlNum);
+    bindEvent('click', btn_sort, bubbleSort);
+  </script>
+</body>
+
+</html>
