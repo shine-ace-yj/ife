@@ -45,6 +45,7 @@
       <button type="button" id="rightin">右侧入</button>
       <button type="button" id="leftout">左侧出</button>
       <button type="button" id="rightout">右侧出</button>
+      <button type="button" id="ran">生成随机序列</button>
       <button type="button" id="sortup">排序</button>
     </div>
     <div id="show"></div>
@@ -58,6 +59,7 @@
     var item = document.getElementsByClassName('item');
     var in_v = document.getElementById('inpu');
     var btn_sort = document.getElementById('sortup');
+    var ran = document.getElementById('ran');
     var arr = [];
     //限制输入为数字
     inputControlNum = () => {
@@ -77,12 +79,12 @@
       return true;
     };
     //渲染函数
-    render = () => {
+    render = (list) => {
       show.innerHTML = '';
-      arr.forEach((item, index, array) => {
+      list.forEach((item, index, array) => {
         var span = document.createElement('span');
         span.style.height = `${item * 2}px`;
-        var h = span.style.cssText;
+        var active = activeItem[index];
         span.addEventListener('click', removeItem);
         show.appendChild(span);
       })
@@ -94,7 +96,7 @@
         return false;
       };
       arr.unshift(in_v.value);
-      render(); //渲染
+      render(arr); //渲染
       in_v.value = ''; //清空
     };
 
@@ -104,35 +106,37 @@
         return false;
       };
       arr.push(in_v.value);
-      render();
+      render(arr);
       in_v.value = '';
     };
 
     //左侧出
     removeLeft = () => {
       arr.shift();
-      render();
+      render(arr);
     };
 
     //右侧出
     removeRight = () => {
       arr.pop();
-      render();
+      render(arr);
     };
 
     //事件点击删除元素自身
     removeItem = (event) => {
       show.removeChild(event.target);
     }; 
-    /*测试用
-     *-function () {
-     * for (var i = 0; i < 11; i++) {
+    //生成随机序列，测试排序
+    createRandom = () => {
+      for (var i = 0; i < 30 ; i++) {
         arr.push(Math.random() * 100 + 1);
       }
-      render();
-      return arr;
-    }();*/
-
+      render(arr);
+    };
+    //data记录每次比较交换后的arr
+    var data = [];
+    var activeItem = [];
+    //排序arr并记录data
     bubbleSort = () => {
       for (var i = 0; i < arr.length - 1; i++) {
         for (var j = 0; j < arr.length - 1 - i; j++) {
@@ -140,14 +144,27 @@
                 var temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
-                render();
+                data.push(arr.slice(0));
+                activeItem.push(j);
               };
           };
         };
-      
-      console.log(arr);
-      return arr;
     };
+    //渲染每次交换
+    sortRender = () => { 
+        render(data[0]);
+        
+        data.shift();
+        if(!data[0]) {
+          clearInterval(setTime);
+        }
+    }
+    //排序事件
+    Sort = () => {
+      bubbleSort();
+      console.log(activeItem);   
+      setTime = setInterval(sortRender, 500);
+    }
 
     //绑定事件函数
     bindEvent = (type, node, handler) => {
@@ -158,7 +175,8 @@
     bindEvent('click', leftout, removeLeft);
     bindEvent('click', rightout, removeRight);
     bindEvent('keyup', in_v, inputControlNum);
-    bindEvent('click', btn_sort, bubbleSort);
+    bindEvent('click', btn_sort, Sort);
+    bindEvent('click', ran, createRandom);
   </script>
 </body>
 
