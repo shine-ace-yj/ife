@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title></title>
-    <meta charset="UTF-8">
-    <style>
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    #container {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #f00;
+    }
+    
+    #container div {
+      border: 1px solid #f00;
+      width: 150px;
+    }
+    
+    @media (max-width: 640px) {
       #container {
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px solid #f00;
-      }
-      #container div {
-        border: 1px solid #f00;
-        width: 150px;
-      }
-      #wrap {
-        padding: 20px;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-around;
         flex-wrap: wrap;
       }
-      #wrap div {
-        border: 1px solid #f00;
-        width: 150px;
+      #four {
+        order: -1;
+        margin-bottom: 20px;
       }
-    </style>
-  </head>
-  <body>
-    <div id="container">
-      <div style="height: 120px;"></div>
-      <div style="height: 100px;"></div>
-      <div style="height: 40px;"></div>
-      <div style="height: 200px;border: 1px solid #0f0"></div>
-    </div>
-    <div id="wrap">
-      <div style="height: 120px; order: 2;"></div>
-      <div style="height: 100px; order: 2;"></div>
-      <div style="height: 40px; order: 2;"></div>
-      <div style="height: 200px; border: 1px solid #0f0; order: 1;"></div>
-    </div>
-  </body>
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div style="height: 120px;"></div>
+    <div style="height: 100px;"></div>
+    <div style="height: 40px;"></div>
+    <div style="height: 200px;border: 1px solid #0f0" id="four"></div>
+  </div>
+</body>
+
 </html>
