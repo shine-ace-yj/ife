@@ -22,7 +22,7 @@
 #wrap img {
   width: 700px;
   height: 460px;
-  transition: all 1s;
+  transition: all .8s;
   margin-left: -70px;
   margin-top: -46px;
   z-index: 1;
@@ -41,7 +41,7 @@
   top: 50%;
   margin-top: -184px;
   margin-left: -280px;
-  transition: all 0.8s;
+
 }
 
 .container::before {
@@ -54,7 +54,7 @@
   border: 3px solid #fff;
   border-width: 0 3px;
   z-index: 2;
-  transition: all 0.8s;
+  transition: all .8s;
 }
 
 .container::after {
@@ -67,7 +67,7 @@
   border: 3px solid #fff;
   border-width: 3px 0;
   z-index: 2;
-  transition: all 0.8s;
+  transition: all .8s;
 }
 
 #wrap:hover .container::before {
@@ -99,6 +99,7 @@
   background-size: 200% 100%;
   animation: run 4s infinite linear;
   visibility: hidden;
+  
 }
 
 @keyframes run {
