@@ -125,10 +125,10 @@
     //事件点击删除元素自身
     removeItem = (event) => {
       show.removeChild(event.target);
-    }; 
+    };
     //生成随机序列，测试排序
     createRandom = () => {
-      for (var i = 0; i < 30 ; i++) {
+      for (var i = 0; i < 30; i++) {
         arr.push(Math.random() * 100 + 1);
       }
       render(arr);
@@ -140,29 +140,29 @@
     bubbleSort = () => {
       for (var i = 0; i < arr.length - 1; i++) {
         for (var j = 0; j < arr.length - 1 - i; j++) {
-              if (arr[j] > arr[j + 1]) {
-                var temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                data.push(arr.slice(0));
-                activeItem.push(j);
-              };
+          if (arr[j] > arr[j + 1]) {
+            var temp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
+            data.push(arr.slice(0));
+            activeItem.push(j);
           };
         };
+      };
     };
     //渲染每次交换
-    sortRender = () => { 
-        render(data[0]);
-        
-        data.shift();
-        if(!data[0]) {
-          clearInterval(setTime);
-        }
+    sortRender = () => {
+      render(data[0]);
+
+      data.shift();
+      if (!data[0]) {
+        clearInterval(setTime);
+      }
     }
     //排序事件
     Sort = () => {
       bubbleSort();
-      console.log(activeItem);   
+      console.log(activeItem);
       setTime = setInterval(sortRender, 500);
     }
 
