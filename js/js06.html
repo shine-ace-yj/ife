@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    *::before,
+    *::after,
+    * {
+      box-sizing: border-box;
+    }
+    
+    #wrap {
+      font-size: 30px;
+      font-family: "simHei";
+      width: 720px;
+      height: 500px;
+      margin: 0 auto;
+      padding-top: 200px;
+    }
+    
+    label {
+      margin-right: 20px;
+    }
+    
+    input {
+      display: inline-block;
+      padding-left: 10px;
+      height: 50px;
+      width: 500px;
+      border-radius: 4px;
+      border: 1px solid #999;
+      font-size: 16px;
+    }
+    
+    button {
+      width: 80px;
+      height: 50px;
+      background: #38f;
+      border: none;
+      border-radius: 4px;
+      margin-left: 30px;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    
+    p {
+      text-align: left;
+      padding-left: 100px;
+      padding-top: 20px;
+      font-size: 18px;
+      color: #999;
+    }
+    
+    .error {
+      border-color: red;
+      color: red;
+    }
+    
+    .correct {
+      border-color: limegreen;
+      color: limegreen;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <form>
+      <label for="">名称</label>
+      <input type="text" name="one" id="input">
+      <button type="button" id="btn">验证</button>
+    </form>
+    <p>必填，长度为4-16个字符</p>
+
+  </div>
+  <script>
+    const BTN = document.getElementById('btn');
+    const INPUT = document.getElementById('input');
+    const MSG = document.getElementsByTagName('p');
+    const MAXIN = 16;
+    const MININ = 4;
+
+    function isASCII(str) {
+      return str.codePointAt(0) < 0xff;
+    };
+
+    function getLen(strs) {
+      let enLen = 0;
+      let chLen = 0;
+      for (let str of strs) {
+        if (isASCII(str)) {
+          enLen++
+        } else {
+          chLen++;
+        }
+      }
+      return enLen + chLen * 2;
+    };
+
+    function active() {
+      let strs = INPUT.value;
+      let len = getLen(strs);
+      if (!len) {
+        INPUT.className = 'error';
+        MSG[0].innerHTML = '姓名不能为空';
+        MSG[0].style.color = 'red';
+      } else if (len >= MININ && len <= MAXIN) {
+        INPUT.className = 'correct';
+        MSG[0].innerHTML = '格式正确';
+        MSG[0].style.color = 'limegreen';
+      } else {
+        INPUT.className = 'error';
+        MSG[0].innerHTML = '格式错误';
+        MSG[0].style.color = 'red';
+      }
+
+    }
+
+    BTN.addEventListener('click', active);
+  </script>
+</body>
+
+</html>
