@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    *+* {
+      margin-bottom: 20px;
+    }
+    
+    form {
+      width: 400px;
+      padding: 20px;
+      margin: 100px auto;
+    }
+    
+    input {
+      display: inline-block;
+      width: 300px;
+      height: 26px;
+      outline: none;
+      border: 1px solid #a29d9c;
+      border-radius: 6px;
+      padding: 2px 0 2px 8px;
+    }
+    
+    label {
+      display: inline-block;
+      width: 70px;
+      text-align: right;
+      margin-right: 10px;
+    }
+    
+    button {
+      padding: 10px 140px;
+      color: #fff;
+      font-size: 14px;
+      background: deepskyblue;
+      border: none;
+      border-radius: 4px;
+      float: right;
+      margin-right: 8px;
+    }
+    
+    p {
+      visibility: hidden;
+      margin: -14px 0 8px 86px;
+      color: #666;
+    }
+    
+    .error {
+      border-color: red;
+    }
+    
+    .correct {
+      border-color: limegreen;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="">
+    <label for="name">名称</label>
+    <input type="text" name="name" id="name">
+    <p>必填，字符长度为4-16</p>
+    <label for="pass">密码</label>
+    <input type="password" name="pass" id="pass">
+    <p>必填，只能为4-16位数字或英文字母符号</p>
+    <label for="again">密码确认</label>
+    <input type="password" name="again" id="again">
+    <p>请再次输入密码</p>
+    <label for="email">邮箱</label>
+    <input type="text" name="email" id="email">
+    <p>请输入邮箱格式为xxxx@xx.xxx</p>
+    <label for="phone">手机</label>
+    <input type="text" name="phone" id="phone">
+    <p>请输入手机号码</p>
+    <button type="button" id="sub">提交</button>
+  </form>
+  <script>
+    const FORM = document.forms;
+    const btn = document.getElementById('sub');
+    //input的状态（错误 or 正确）
+    let inputState = {
+      name: true,
+      password: true,
+      again: true,
+      email: true,
+      phone: true
+    };
+
+    //判断是否为英文
+    function isASCII(str) {
+      return str.codePointAt(str) < 0xff;
+    };
+
+    //获得字符长度
+    function getLen(strs) {
+      let enLen = 0;
+      let chLen = 0;
+      let numLen = 0;
+      for (let str of strs) {
+        if (!isNaN(Number(str)) && typeof Number(str) === 'number') {
+          numLen++;
+        } else if (isASCII(str)) {
+          enLen++;
+        } else {
+          chLen++;
+        }
+      };
+      return enLen + chLen * 2 + numLen;
+    }
+
+    //设置正确错误的格式
+    function setStyle(target, condition) {
+      let nextEle = target.nextElementSibling;
+      target.className = condition;
+      nextEle.className = condition;
+      if (condition === 'error') {
+        nextEle.innerHTML = '输入为空或格式错误';
+        nextEle.style.cssText = 'visibility: visible; color: red;';
+      } else {
+        nextEle.innerHTML = '格式正确';
+        nextEle.style.cssText = 'visibility: visible; color: limegreen;';
+      }
+    }
+
+    //当上一个输入框未填写，
+    /*function ifPreviousNo(target) {
+      const INPUTS = document.getElementsByTagName('input');
+      const inputLen = INPUTS.length;
+      let n = 0; //获得当前的input索引
+      for (let i = 0; i < inputLen; i++) {
+        if (target.id === INPUTS[i].id) {
+          n = i;
+        }
+      }
+      if (n - 1 >= 0 && INPUTS[n - 1].value === '') {
+        alert(INPUTS[n - 1].id + '未填写');
+        INPUTS[n - 1].focus();
+        return true;
+      }
+    }*/
+
+    //当input focus时
+    function ifFocus(event) {
+      let e = event || window.event;
+      let target = EventUtil.getTarget(e);
+      if (target.tagName === 'BUTTON') {
+        return false;
+      } else {
+        target.nextElementSibling.style.visibility = 'visible';
+      }
+    };
+
+    //当input blur时
+    function ifBlur(event) {
+      let e = event || window.event;
+      let target = EventUtil.getTarget(e);
+      const MAXIN = 16;
+      const MININ = 4;
+      if (target.tagName === 'BUTTON') {
+        return false;
+      } else {
+        target.nextElementSibling.style.visibility = 'hidden';
+      }
+
+      switch (target.id) {
+        case 'name': //input名称
+          let nameLen = getLen(target.value);
+          if (nameLen < MININ || nameLen > MAXIN) {
+            setStyle(target, 'error');
+            inputState.name = false;
+          } else {
+            setStyle(target, 'correct');
+            inputState.name = true;
+          }
+          break;
+        case 'pass': //input密码
+          let passW = Array.from(target.value);
+          let filterPass = passW.filter((item, index, arr) => {
+            return item.codePointAt() < 0xff;
+          });
+          let passLen = getLen(filterPass);
+          if (passLen < MININ || passLen > MAXIN) {
+            setStyle(target, 'error');
+            inputState.password = false;
+          } else {
+            setStyle(target, 'correct');
+            inputState.password = true;
+          }
+          break;
+        case 'again': //校验密码
+          const passfirst = document.getElementById('pass');
+          if (passfirst.value && target.value === passfirst.value) {
+            setStyle(target, 'correct');
+            inputState.again = true;
+          } else {
+            setStyle(target, 'error');
+            inputState.again = false;
+          }
+          break;
+        case 'email': //email
+          let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+          if (emailReg.test(target.value)) {
+            setStyle(target, 'correct');
+            inputState.email = true;
+          } else {
+            setStyle(target, 'error');
+            inputState.email = false;
+          }
+          break;
+        case 'phone': //phone
+          let phoneReg = /0?(13|14|15|18)[0-9]{9}/;
+          if (phoneReg.test(target.value)) {
+            setStyle(target, 'correct');
+            inputState.phone = true;
+          } else {
+            setStyle(target, 'error');
+            inputState.phone = false;
+          }
+          break;
+      }
+    };
+    //全局检查
+    function checkUp(event) {
+      let errorInput = [];
+      Object.keys(inputState).forEach((item, index, arr) => {
+        if (inputState[item] === false) {
+          errorInput.push(item);
+        }
+      });
+      if (errorInput.length) {
+        alert(errorInput.join(',') + '输入错误');
+      }
+
+    }
+
+    //事件绑定
+    const EventUtil = {
+      addHandler(ele, type, handler) {
+        if (ele.addEventListener) {
+          ele.addEventListener(type, handler, false);
+        } else {
+          ele.attachEvent('on' + type, handler);
+        }
+      },
+
+      removeHandler(ele, type, handler) {
+        if (ele.removeEventListener) {
+          ele.removeEventListener(type, handler, false);
+        } else {
+          ele.detachEvent('on' + type, handler);
+        }
+      },
+
+      getEvent(event) {
+        return event ? event : window.event;
+      },
+
+      getTarget(event) {
+        return event.target || event.srcElement;
+      }
+    };
+
+    //绑定事件
+    EventUtil.addHandler(FORM[0], 'focusin', ifFocus);
+    EventUtil.addHandler(FORM[0], 'focusout', ifBlur);
+    EventUtil.addHandler(btn, 'click', checkUp);
+  </script>
+</body>
+
+</html>
